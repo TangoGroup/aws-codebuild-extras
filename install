@@ -9,7 +9,7 @@ echo "==> CODEBUILD_SOURCE_VERSION = $CODEBUILD_SOURCE_VERSION"
 
 export CODEBUILD_GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
 if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
-  CODEBUILD_GIT_BRANCH="$(git branch -a --contains HEAD "*$CODEBUILD_SOURCE_VERSION*" | sed -n 2p | awk '{ printf $1 }')";
+  CODEBUILD_GIT_BRANCH="$(git branch -r --points-at HEAD --sort='*authordate' | head -n1 | awk '{ printf $1 }')";
   export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#remotes/origin/};
 fi
 
