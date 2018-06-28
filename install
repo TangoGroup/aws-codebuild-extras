@@ -10,8 +10,11 @@ echo "==> CODEBUILD_SOURCE_VERSION = $CODEBUILD_SOURCE_VERSION"
 export CODEBUILD_GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
 if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
   POSSIBLE_BRANCHES="$(git branch -r --points-at HEAD --sort='*authordate')"
-  FILTERED_BRANCHES="$(echo $POSSIBLE_BRANCHES | grep $CODEBUILD_SOURCE_VERSION)"
+  echo "POSSIBLE_BRANCHES: $POSSIBLE_BRANCHES";
+  FILTERED_BRANCHES="$(echo $POSSIBLE_BRANCHES | grep $CODEBUILD_SOURCE_VERSION)";
+  echo "FILTERED_BRANCHES: $FILTERED_BRANCHES";
   if [ "$(echo $FILTERED_BRANCHES | wc -l)" -ge 1 ]; then
+    echo "We have 1 or more matching branches";
     POSSIBLE_BRANCHES=$FILTERED_BRANCHES;
   fi
   CODEBUILD_GIT_BRANCH="$(echo $POSSIBLE_BRANCHES | head -n1 | awk '{ printf $1 }')";
