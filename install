@@ -13,7 +13,7 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
   echo "POSSIBLE_BRANCHES: $POSSIBLE_BRANCHES";
   FILTERED_BRANCHES="$(echo "$POSSIBLE_BRANCHES" | grep $CODEBUILD_SOURCE_VERSION)";
   echo "FILTERED_BRANCHES: $FILTERED_BRANCHES";
-  if [ "$(echo "$FILTERED_BRANCHES" | wc -l)" -ge 1 ]; then
+  if [ "$(echo "$FILTERED_BRANCHES" | awk '{$1=$1};1')" != "" ]; then
     echo "We have 1 or more matching branches";
     POSSIBLE_BRANCHES="$FILTERED_BRANCHES";
   fi
