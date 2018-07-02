@@ -33,8 +33,8 @@ export CODEBUILD_GIT_MOST_RECENT_TAG="$(git describe --tags --abbrev=0 2>/dev/nu
 export CODEBUILD_GIT_TIMESTAMP="$(TZ=UTC date --date=`git log -1 --pretty='%cI'` "+%Y%m%d.%H%M%SZ")"
 
 export CODEBUILD_PULL_REQUEST=false
-if [ "${CODEBUILD_GIT_BRANCH#pr-}" != "$CODEBUILD_GIT_BRANCH" ] ; then
-  export CODEBUILD_PULL_REQUEST=${CODEBUILD_GIT_BRANCH#pr-};
+if [ "${CODEBUILD_SOURCE_VERSION#pr/}" != "$CODEBUILD_SOURCE_VERSION" ] ; then
+  export CODEBUILD_PULL_REQUEST=${CODEBUILD_SOURCE_VERSION#pr/};
 fi
 
 export CODEBUILD_PROJECT=${CODEBUILD_BUILD_ID%:$CODEBUILD_LOG_PATH}
