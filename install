@@ -24,7 +24,7 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
 fi
 
 for branch in `echo "$POSSIBLE_BRANCHES"`; do  echo "---> ${branch#origin/}"; done
-export CODEBUILD_GIT_BRANCHES="$POSSIBLE_BRANCHES"f;
+export CODEBUILD_GIT_BRANCHES="$POSSIBLE_BRANCHES";
 
 export CODEBUILD_GIT_CLEAN_BRANCH="$(echo $CODEBUILD_GIT_BRANCH | tr '/' '.')"
 export CODEBUILD_GIT_ESCAPED_BRANCH="$(echo $CODEBUILD_GIT_CLEAN_BRANCH | sed -e 's/[]\/$*.^[]/\\\\&/g')"
