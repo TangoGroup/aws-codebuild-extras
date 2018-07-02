@@ -5,6 +5,8 @@ export CODEBUILD=true
 
 echo "git branch -r --points-at HEAD --sort='*authordate': \n$(git branch -r --points-at HEAD --sort='*authordate')";
 
+echo "$(ps -p $$)";
+
 echo "==> CODEBUILD_SOURCE_VERSION = $CODEBUILD_SOURCE_VERSION"
 
 export CODEBUILD_GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
