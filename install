@@ -23,6 +23,8 @@ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
   export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#origin/};
 fi
 
+for branch in `echo "$POSSIBLE_BRANCHES"`; do  echo "---> ${branch#origin/}"; done
+
 export CODEBUILD_GIT_CLEAN_BRANCH="$(echo $CODEBUILD_GIT_BRANCH | tr '/' '.')"
 export CODEBUILD_GIT_ESCAPED_BRANCH="$(echo $CODEBUILD_GIT_CLEAN_BRANCH | sed -e 's/[]\/$*.^[]/\\\\&/g')"
 export CODEBUILD_GIT_MESSAGE="$(git log -1 --pretty=%B)"
