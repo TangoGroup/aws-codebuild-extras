@@ -12,6 +12,8 @@ echo "FILTERED_BRANCHES: $FILTERED_BRANCHES";
 if [ "$(echo "$FILTERED_BRANCHES" | awk '{$1=$1};1')" != "" ]; then
   echo "We have 1 or more matching branches";
   POSSIBLE_BRANCHES="$FILTERED_BRANCHES";
+else
+  POSSIBLE_BRANCHES="$CODEBUILD_GIT_BRANCHES";
 fi
 CODEBUILD_GIT_BRANCH="$(echo "$POSSIBLE_BRANCHES" | head -n1 | awk '{ printf $1 }')";
 export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#origin/};
