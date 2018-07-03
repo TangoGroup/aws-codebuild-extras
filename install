@@ -45,8 +45,6 @@ fi
 export DOCKER_TAGS="$GIT_SHA\n$DOCKER_TAGS"
 export DOCKER_PULL_TAGS="$GIT_SHA\n$CLEAN_BRANCHES"
 
-# export DOCKER_CACHE_FROM="$(echo "$DOCKER_PULL_TAGS" | sed "s|^|--cache-from $REPO|g")"
-
 export CODEBUILD_PROJECT=${CODEBUILD_BUILD_ID%:$CODEBUILD_LOG_PATH}
 export CODEBUILD_BUILD_URL=https://$AWS_DEFAULT_REGION.console.aws.amazon.com/codebuild/home?region=$AWS_DEFAULT_REGION#/builds/$CODEBUILD_BUILD_ID/view/new
 
