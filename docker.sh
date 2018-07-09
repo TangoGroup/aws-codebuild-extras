@@ -12,12 +12,24 @@ DOCKER_TAGS="$BRANCH_TAGS"
 export DOCKER_TAGS="$GIT_SHA\n$DOCKER_TAGS"
 export DOCKER_PULL_TAGS="$GIT_SHA\n$CLEAN_BRANCHES"
 
+if [ "${CODEBUILD_PULL_REQUEST}" != "false" ]; then
+  PR="pr.$CODEBUILD_PULL_REQUEST";
+  DOCKER_TAGS="$PR\n$PR$SUFFIX\n$DOCKER_TAGS";
+fi
 
-# if $CODEBUILD_SOURCE_VERSION is not a git hash
-# and is equal to a branch that points at this current commit, 
-# tag it like this!:
-export COMMIT_TAG="${CODEBUILD_GIT_CLEAN_BRANCH}-${CODEBUILD_GIT_TIMESTAMP}-${CODEBUILD_GIT_SHORT_COMMIT}"
-# otherwise, set COMMIT_TAG to $GIT_SHA
+#  is not a git hash
+# if [ "$(echo "${CODEBUILD_SOURCE_VERSION}" | grep -o -E -e "^[0-9a-f]{40}$")" = "" ]; then
+# if $CODEBUILD_SOURCE_VERSION is -equal- to a branch that points at this current commit
+if [ "$(echo "$CLEAN_BRANCHES" | grep -o -E -e "^$CODEBUILD_SOURCE_VERSION$" )" != "" ]; then
+  CLEAN_CODEBUILD_SOURCE_VERSION="$(echo "$CODEBUILD_SOURCE_VERSION" | tr '/' '.')";
+  export COMMIT_TAG="${CLEAN_CODEBUILD_SOURCE_VERSION}-${CODEBUILD_GIT_TIMESTAMP}-${CODEBUILD_GIT_SHORT_COMMIT}";
+# or there is only one branch that points at this current commit (for PRs...?)
+elif [ "$(echo -n "$CLEAN_BRANCHES" | sed "/^$/d" | wc -l)" -eq 1 ]; then
+  export COMMIT_TAG="${CODEBUILD_GIT_CLEAN_BRANCH}-${CODEBUILD_GIT_TIMESTAMP}-${CODEBUILD_GIT_SHORT_COMMIT}";
+# else use the short git commit SHA
+else
+  export COMMIT_TAG="${CODEBUILD_GIT_SHORT_COMMIT}"
+fi
 
 echo "==> AWS CodeBuild Docker Environment Variables:"
 echo "==> DOCKER_TAGS = $DOCKER_TAGS"
