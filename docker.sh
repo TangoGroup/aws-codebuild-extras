@@ -17,7 +17,6 @@ if [ "${CODEBUILD_PULL_REQUEST}" != "false" ]; then
   DOCKER_TAGS="$PR\n$PR$SUFFIX\n$DOCKER_TAGS";
 fi
 
-#  is not a git hash
 # if [ "$(echo "${CODEBUILD_SOURCE_VERSION}" | grep -o -E -e "^[0-9a-f]{40}$")" = "" ]; then
 # if $CODEBUILD_SOURCE_VERSION is -equal- to a branch that points at this current commit
 if [ "$(echo "$CLEAN_BRANCHES" | grep -o -E -e "^$CODEBUILD_SOURCE_VERSION$" )" != "" ]; then
