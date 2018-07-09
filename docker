@@ -22,7 +22,7 @@ if [ "$(echo "$CODEBUILD_GIT_BRANCHES" | grep -o -E -e "^$CODEBUILD_SOURCE_VERSI
   CLEAN_CODEBUILD_SOURCE_VERSION="$(echo "$CODEBUILD_SOURCE_VERSION" | tr '/' '.')";
   export COMMIT_TAG="${CLEAN_CODEBUILD_SOURCE_VERSION}-${CODEBUILD_GIT_TIMESTAMP}-${CODEBUILD_GIT_SHORT_COMMIT}";
 # or there is only one branch that points at this current commit (for PRs...?)
-elif [ "$(echo -n "$CLEAN_BRANCHES" | sed "/^$/d" | wc -l)" -eq 1 ]; then
+elif [ "$(echo "$CLEAN_BRANCHES" | sed "/^$/d" | wc -l)" -eq 1 ]; then
   export COMMIT_TAG="${CODEBUILD_GIT_CLEAN_BRANCH}-${CODEBUILD_GIT_TIMESTAMP}-${CODEBUILD_GIT_SHORT_COMMIT}";
 # else use the short git commit SHA
 else
