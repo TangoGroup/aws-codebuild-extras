@@ -1,6 +1,7 @@
 # aws-codebuild-extras
 Add extra information of your AWS CodeBuild build via environment variables.
-User `docker.sh` to generate docker tags for a build.
+
+Use `docker.sh` to generate docker tags for a build.
 
 ## Usage
 
