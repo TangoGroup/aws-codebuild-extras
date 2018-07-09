@@ -19,7 +19,7 @@ fi
 
 # if [ "$(echo "${CODEBUILD_SOURCE_VERSION}" | grep -o -E -e "^[0-9a-f]{40}$")" = "" ]; then
 # if $CODEBUILD_SOURCE_VERSION is -equal- to a branch that points at this current commit
-if [ "$(echo "$CLEAN_BRANCHES" | grep -o -E -e "^$CODEBUILD_SOURCE_VERSION$" )" != "" ]; then
+if [ "$(echo "$CODEBUILD_GIT_BRANCHES" | grep -o -E -e "^$CODEBUILD_SOURCE_VERSION$" )" != "" ]; then
   CLEAN_CODEBUILD_SOURCE_VERSION="$(echo "$CODEBUILD_SOURCE_VERSION" | tr '/' '.')";
   export COMMIT_TAG="${CLEAN_CODEBUILD_SOURCE_VERSION}-${CODEBUILD_GIT_TIMESTAMP}-${CODEBUILD_GIT_SHORT_COMMIT}";
 # or there is only one branch that points at this current commit (for PRs...?)
